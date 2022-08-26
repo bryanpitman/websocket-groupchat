@@ -63,8 +63,14 @@ class Room {
    * */
 
   broadcast(data) {
-    for (let member of this.members) {
-      member.send(JSON.stringify(data));
+
+    if (data.type === "joke") {
+
+    } else {
+      for (let member of this.members) {
+        console.log("^&^*^&*^^*^^**^", member)
+        member.send(JSON.stringify(data));
+      }
     }
   }
 }

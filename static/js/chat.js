@@ -1,5 +1,7 @@
 "use strict";
 
+// const e = require("express");
+
 /** Client-side of groupchat. */
 
 const urlParts = document.URL.split("/");
@@ -30,6 +32,8 @@ ws.onmessage = function (evt) {
 
   if (msg.type === "note") {
     item = $(`<li><i>${msg.text}</i></li>`);
+  } else if (msg.type === "joke") {
+    item = $(`<li><i>${msg.text}</i></li>`);
   } else if (msg.type === "chat") {
     item = $(`<li><b>${msg.name}: </b>${msg.text}</li>`);
   } else {
@@ -59,7 +63,13 @@ ws.onclose = function (evt) {
 $("form").submit(function (evt) {
   evt.preventDefault();
 
-  let data = { type: "chat", text: $("#m").val() };
+  let data;
+  if ($("#m").val() === "/joke") {
+    data = { type: "joke" };
+  } else {
+    data = { type: "chat", text: $("#m").val() };
+
+  }
   ws.send(JSON.stringify(data));
 
   $("#m").val("");

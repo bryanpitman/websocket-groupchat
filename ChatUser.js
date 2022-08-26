@@ -76,6 +76,10 @@ class ChatUser {
     let msg = JSON.parse(jsonData);
 
     if (msg.type === "join") this.handleJoin(msg.name);
+
+    //else if msg.type is equal to chat
+    else if (msg.type === "joke") this.handleJoke();
+    //message.text is equal to msg/joke
     else if (msg.type === "chat") this.handleChat(msg.text);
     else throw new Error(`bad message: ${msg.type}`);
   }
@@ -88,6 +92,14 @@ class ChatUser {
       type: "note",
       text: `${this.name} left ${this.room.name}.`,
     });
+  }
+  //chat user has a send method.
+  handleJoke() {
+    this.send(JSON.stringify({
+      name: "kingofthenorthwest",
+      type: "joke",
+      text: "What do you call eight hobbits? A hob-byte!",
+    }));
   }
 }
 
